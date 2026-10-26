@@ -2,645 +2,1038 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>브릿지 커피 메뉴판</title>
 
-  <!-- ╔══════════════════════════════════════════════════════════════════╗
-       ║  ★★★  메뉴 정보  ★★★   메뉴·가격을 고칠 때는 "이 칸만" 보세요!   ║
-       ╚══════════════════════════════════════════════════════════════════╝
-
-       이 파일에서 메뉴 이름, 가격, 설명은 전부 아래 한 곳에 모여 있습니다.
-       여기를 고치면 손님이 보는 화면(시그니처 메뉴, 카테고리 버튼, 메뉴 목록)이
-       전부 저절로 바뀝니다. 다른 곳은 고칠 필요가 없어요.
-
-       ■ 고치기 전에 꼭 지켜주세요 (실수 방지)
-         1) 글자는 반드시 큰따옴표 "  "  안에 쓰세요.   예) "아메리카노"
-         2) 가격은 따옴표 없이 숫자만 쓰세요.            예) 4500
-            (원, 쉼표, 점은 쓰지 마세요. 화면에는 "4,500원"으로 자동으로 나옵니다.)
-         3) 메뉴 한 줄 맨 끝의 쉼표(,)는 아주 중요해요!
-            - 줄 맨 끝에 쉼표가 있는 줄 = 그 아래에 다른 메뉴가 더 있다는 뜻
-            - 카테고리 안의 "맨 마지막 메뉴" 줄만 쉼표가 없습니다.
-         4) 설명 글 안에 큰따옴표(")는 쓰지 마세요. 화면이 깨질 수 있어요.
-         5) 고치기 전에 이 파일을 복사해서 백업해 두면 마음이 편해요.
-            (망가져도 복사본으로 되돌리면 됩니다.)
-         6) 고친 뒤에는 브라우저에서 새로고침(F5)을 눌러 확인하세요.
-            화면이 하얗게 비면 쉼표나 따옴표가 하나 빠진 거예요. 방금 고친 줄을 다시 보세요.
-
-       ■ 메뉴 한 줄은 이렇게 생겼어요
-         { 이름: "아메리카노", 가격: 4500, 설명: "산미가 적은 고소한 원두", 시그니처: false, 품절: 0 },
-            └ 메뉴 이름       └ 가격(숫자)   └ 한 줄 설명                  └ 시그니처(추천) 표시  └ 품절 표시(0/1)
-
-       ■ 자주 하는 작업 방법
-         ▶ 가격 고치기
-            고칠 메뉴 줄에서 "가격:" 뒤의 숫자만 바꾸세요.
-            예) 4500 → 4800  으로 바꾸면 "4,800원"으로 나옵니다.
-
-         ▶ 메뉴 이름이나 설명 고치기
-            큰따옴표 안의 글자만 바꾸세요. 따옴표 자체는 지우지 마세요.
-
-         ▶ 메뉴 새로 추가하기
-            1. 같은 카테고리 안에서 아무 메뉴 한 줄을 통째로 복사하세요.
-            2. 원하는 위치에 붙여넣으세요. (붙여넣은 줄 끝에 쉼표가 있는지 확인!)
-            3. 이름 / 가격 / 설명을 새 메뉴에 맞게 바꾸세요.
-            4. ⚠ 맨 마지막 줄 뒤에 붙였다면:
-               원래 마지막 줄 끝에 쉼표(,)를 붙이고, 새로 붙인 줄 끝의 쉼표는 지우세요.
-
-         ▶ 메뉴 지우기
-            지울 메뉴 줄 하나를 통째로 지우세요.
-            ⚠ 그 줄이 카테고리의 "맨 마지막 줄"이었다면,
-              새로 마지막이 된 줄 끝의 쉼표(,)를 지워야 합니다.
-            (지우기 아까우면 줄 맨 앞에 // 를 붙여 "잠깐 숨기기"도 됩니다.
-             다시 보이게 하려면 // 를 지우세요.)
-
-         ▶ 시그니처 메뉴(사장님 추천) 바꾸기
-            시그니처로 보여주고 싶은 메뉴는 줄 끝부분을 시그니처: true 로,
-            아닌 메뉴는 시그니처: false 로 바꾸세요.
-            true 로 한 메뉴는 두 군데에 나옵니다.
-              ① 화면 맨 위 "★ 시그니처 메뉴" 칸
-              ② 아래 메뉴 목록의 그 카드 (이름 옆에 "사장님 추천" 배지 + 살짝 더 강조)
-            (2개 정도가 보기 좋아요. 영어 true / false 는 따옴표 없이 쓰세요.)
-            배지에 적히는 글자("사장님 추천")를 바꾸려면 아래쪽 "배지글자" 줄의 큰따옴표 안 글자만 고치세요.
-
-         ▶ 오늘 품절 켜고 끄기 (한 글자만 바꾸면 돼요!)
-            메뉴 줄 끝에 품절: 0 이 있어요.
-              · 품절: 0  →  판매 중 (평소 모습)
-              · 품절: 1  →  "오늘 품절" (카드가 흐려지고 "오늘 품절" 표시가 떠요)
-            ① Ctrl + F 로 품절 처리할 메뉴 이름을 검색합니다. 예) 스콘
-            ② 그 줄 끝의  품절: 0  에서 0 을 1 로 바꿉니다.
-            ③ Ctrl + S 로 저장하고, 브라우저에서 F5 로 새로고침합니다.
-            다시 팔 수 있게 되면 1 을 0 으로 되돌리면 끝이에요.
-            ⚠ 숫자 0 과 1 만 쓰세요. 따옴표는 붙이지 않아요.
-            "오늘 품절" 표시의 글자를 바꾸려면 아래쪽 "품절글자" 줄의 큰따옴표 안 글자만 고치세요.
-
-         ▶ 카테고리(커피 / 논커피 / 디저트) 이름 바꾸기
-            "카테고리:" 뒤의 큰따옴표 안 글자를 바꾸세요.
-            카테고리 버튼과 제목이 같이 바뀝니다.
-
-         ▶ 카테고리 새로 만들기 (예: "샌드위치" 추가)
-            1. 아래 "디저트" 덩어리 { 카테고리: ... } 전체를 복사하세요.
-               ({ 로 시작해서 } 로 끝나는 부분입니다.)
-            2. 맨 마지막 덩어리 바로 뒤에 붙여넣으세요.
-            3. 원래 마지막 덩어리 끝 } 뒤에 쉼표(,)를 붙이세요.
-            4. 새 덩어리의 카테고리 이름과 메뉴들을 바꾸세요.
-            버튼도 자동으로 하나 더 생깁니다. (3~4개까지가 휴대폰에서 보기 좋아요.)
-
-       ■ 가게 이름, 영업시간, 전화번호는 어디서 고치나요?
-         이 칸이 아니라 파일 아래쪽 화면 코드 안에 있어요.
-         찾는 방법: 키보드에서 Ctrl + F 를 누르고 "브릿지 커피", "08:00", "tel:" 처럼
-         바꾸고 싶은 글자를 검색하세요. 그 근처에 한국어 안내 글이 달려 있어요.
-         (전화번호는 "tel:" 뒤의 숫자와 버튼 글자, 두 군데를 같이 바꿔야 해요.)
-       ══════════════════════════════════════════════════════════════════ -->
-  <script>
-    /* ----- 표시 글자 설정 (큰따옴표 안의 글자만 바꾸세요) ----- */
-    const 배지글자 = "사장님 추천";   // 시그니처: true 인 메뉴에 붙는 배지 글자
-    const 품절글자 = "오늘 품절";     // 품절: 1 인 메뉴에 뜨는 글자
-
-    const 메뉴 = [
-
-      /* ────────── 카테고리 1: 커피 ────────── */
-      {
-        카테고리: "커피",   // ← 버튼과 제목에 보이는 이름
-        목록: [             // ← 이 [ ] 안에 커피 메뉴들이 들어 있어요
-          { 이름: "아메리카노",          가격: 4500, 설명: "산미가 적은 고소한 원두",              시그니처: false, 품절: 0 },
-          { 이름: "카페라떼",            가격: 5000, 설명: "부드러운 우유 거품",                    시그니처: false, 품절: 0 },
-          { 이름: "바닐라 라떼",         가격: 5500, 설명: "바닐라빈을 직접 우려낸 시럽",           시그니처: false, 품절: 0 },
-          { 이름: "아인슈페너",          가격: 5800, 설명: "단맛을 줄인 수제 크림",                 시그니처: true, 품절: 1 },  // 시그니처 메뉴(사장님 추천)
-          { 이름: "콜드브루",            가격: 5300, 설명: "12시간 저온 추출, 목넘김이 깔끔함",     시그니처: false, 품절: 0 },
-          { 이름: "디카페인 아메리카노", 가격: 5000, 설명: "카페인 걱정 없이 편하게",               시그니처: false, 품절: 0 }   // ← 카테고리 맨 마지막 줄은 쉼표 없음
-        ]
-      },   // ← 카테고리 덩어리 사이에는 쉼표가 필요해요
-
-      /* ────────── 카테고리 2: 논커피 ────────── */
-      {
-        카테고리: "논커피",
-        목록: [
-          { 이름: "흑임자 라떼", 가격: 5500, 설명: "국산 흑임자를 직접 갈아 넣음",   시그니처: true, 품절: 0 },  // 시그니처 메뉴(사장님 추천)
-          { 이름: "말차 라떼",   가격: 5800, 설명: "우지 말차, 쌉싸름한 맛이 진함",  시그니처: false, 품절: 0 },
-        ]
-      },
-
-      /* ────────── 카테고리 3: 디저트 ────────── */
-      {
-        카테고리: "디저트",
-        목록: [
-          { 이름: "치즈케이크",        가격: 6500, 설명: "굽지 않은 부드러운 식감",         시그니처: false, 품절: 0 },
-          { 이름: "당근케이크",        가격: 6000, 설명: "견과류를 넉넉히 넣음",             시그니처: false, 품절: 0 },
-          { 이름: "스콘",              가격: 4000, 설명: "겉은 바삭 속은 촉촉, 잼과 함께",   시그니처: false, 품절: 0 },
-          { 이름: "바스크 치즈케이크", 가격: 6800, 설명: "겉면을 진하게 태운 풍미",          시그니처: false, 품절: 0 }   // ← 마지막 줄: 쉼표 없음
-        ]
-      }   // ← 맨 마지막 카테고리 덩어리 뒤에는 쉼표가 없어요
-
-      /* 카테고리를 새로 만들 때는 위 "}" 뒤에 쉼표(,)를 붙이고 이 자리에 새 덩어리를 붙여넣으세요 */
-    ];
-  </script>
-
-  <!-- 고운 돋움 글꼴을 인터넷에서 불러옵니다. 못 불러오면 맑은 고딕이 대신 쓰입니다. -->
+  <!-- 고운 돋움 글꼴을 인터넷에서 불러와요 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 
-  <style>
-    /* ===== 색깔 설정 (색을 바꾸고 싶으면 여기 # 숫자만 바꾸세요. 전체 색이 한 번에 바뀝니다) =====
-       예전 갈색 버전으로 되돌리고 싶으면 저에게 "갈색으로 되돌려줘"라고 말씀하세요. */
-    :root {
-      --sky:        #CFE8F7;   /* 하늘색 파스텔: 배경 그라데이션 시작 */
-      --sky-mid:    #E3F1F8;   /* 하늘색과 크림색 사이 */
-      --cream:      #F5EFE6;   /* 크림색: 카드·배경 끝 */
-      --sky-strong: #3F86B8;   /* 포인트 하늘색: 가격, 선택된 버튼, 배지 */
-      --ink:        #2F4A5E;   /* 기본 글자색 (진한 남청색) */
-      --ink-soft:   #52697A;   /* 설명 글자색 (조금 연한 색) */
+  <script>
+    /* =========================================================
+       ✏️ 사장님이 고치는 곳 ①: 가게 정보
+       따옴표(" ") 안의 글자만 바꾸세요. 따옴표와 쉼표는 지우지 마세요.
+       ========================================================= */
+    const 가게정보 = {
+      이름: "브릿지 커피",
+      소개: "매일 직접 볶는 스페셜티 커피",
+      영업시간: "평일 08:00 - 21:00 · 주말 10:00 - 20:00 · 목요일 휴무",
+      전화번호: "062-000-0000",
+      위치: "광주 북구 비엔날레",
+      인스타: "bridge_coffee"   // @ 뒤의 아이디만 쓰세요. 비워 두면("") 화면에서 안 보여요.
+    };
 
-      /* 예전 갈색 버전 값 (보관용): --brown #4A3728, --brown-soft #6b5240, --accent #c9a37a */
+    /* =========================================================
+       ✏️ 사장님이 고치는 곳 ②: 메뉴
+       한 줄이 메뉴 한 개예요. { 로 시작해서 }, 로 끝나요.
+       - 메뉴를 늘리려면: 한 줄을 통째로 복사해서 바로 아래에 붙인 뒤 글자를 바꾸세요.
+       - 메뉴를 빼려면: 그 줄을 통째로 지우세요.
+       - 가격은 "4,500원"처럼 '원'까지 적어 주세요.
+       - 묶음: 메뉴가 들어갈 묶음 이름이에요. "커피", "논커피", "디저트" 중 하나를 쓰세요.
+         같은 묶음 이름끼리 화면에서 모여서 보여요.
+
+       ⭐ 시그니처 켜고 끄기 (줄 끝의 '추천:' 뒤 숫자 한 글자)
+         - 추천: 1  →  '⭐ 시그니처' 딱지가 붙고 카드가 강조돼요
+         - 추천: 0  →  딱지가 없어져요
+         (예전처럼 대표: true 라고 써도 똑같이 시그니처로 보여요)
+
+       🚫 품절 켜고 끄기 (줄 끝의 '품절:' 뒤 숫자 한 글자)
+         - 품절: 1  →  카드가 흐려지고 '오늘 품절' 딱지가 떠요
+         - 품절: 0  →  다시 정상으로 보여요
+         예) 오늘 스콘이 다 팔렸다면, 스콘 줄 맨 끝의 품절: 0 을 품절: 1 로 바꾸고 저장하세요.
+             내일 다시 팔 때는 품절: 1 을 품절: 0 으로 바꾸면 돼요.
+       ========================================================= */
+    const 메뉴목록 = [
+      // ☕ 커피
+      { 묶음: "커피", 이름: "아메리카노", 가격: "4,500원", 설명: "산미가 적은 고소한 원두", 추천: 0, 품절: 0 },
+      { 묶음: "커피", 이름: "카페라떼", 가격: "5,000원", 설명: "부드러운 우유 거품", 추천: 0, 품절: 0 },
+      { 묶음: "커피", 이름: "바닐라 라떼", 가격: "5,500원", 설명: "바닐라빈을 직접 우려낸 시럽", 추천: 0, 품절: 0 },
+      { 묶음: "커피", 이름: "아인슈페너", 가격: "5,800원", 설명: "단맛을 줄인 수제 크림", 추천: 1, 품절: 0 },
+      { 묶음: "커피", 이름: "콜드브루", 가격: "5,300원", 설명: "12시간 저온 추출, 목넘김이 깔끔함", 추천: 0, 품절: 0 },
+      { 묶음: "커피", 이름: "디카페인 아메리카노", 가격: "5,000원", 설명: "카페인 걱정 없이 편하게", 추천: 0, 품절: 0 },
+
+      // 🍵 논커피
+      { 묶음: "논커피", 이름: "흑임자 라떼", 가격: "5,500원", 설명: "국산 흑임자를 직접 갈아 넣음", 추천: 1, 품절: 0 },
+      { 묶음: "논커피", 이름: "말차 라떼", 가격: "5,800원", 설명: "우지 말차, 쌉쌀한 맛이 진함", 추천: 0, 품절: 0 },
+      { 묶음: "논커피", 이름: "쑥 라떼", 가격: "5,500원", 설명: "강화도 쑥, 은은하고 담백함", 추천: 0, 품절: 0 },
+      { 묶음: "논커피", 이름: "곡물 라떼", 가격: "5,300원", 설명: "볶은 곡물의 구수한 맛", 추천: 0, 품절: 0 },
+      { 묶음: "논커피", 이름: "자몽에이드", 가격: "6,000원", 설명: "생과일 자몽 과육을 그대로", 추천: 0, 품절: 0 },
+
+      // 🍰 디저트
+      { 묶음: "디저트", 이름: "치즈케이크", 가격: "6,500원", 설명: "굽지 않은 부드러운 식감", 추천: 0, 품절: 0 },
+      { 묶음: "디저트", 이름: "당근케이크", 가격: "6,000원", 설명: "견과류를 넉넉히 넣음", 추천: 0, 품절: 1 },
+      { 묶음: "디저트", 이름: "스콘", 가격: "4,000원", 설명: "겉은 바삭 속은 촉촉, 잼과 함께", 추천: 0, 품절: 0 },
+      { 묶음: "디저트", 이름: "바스크 치즈케이크", 가격: "6,800원", 설명: "겉면을 진하게 태운 풍미", 추천: 0, 품절: 0 },
+    ];
+
+    /* ✏️ 딱지에 쓰이는 글자예요. 따옴표 안을 바꾸면 딱지 글자가 바뀌어요. */
+    const 시그니처딱지글자 = "⭐ 시그니처";
+    const 품절딱지글자 = "오늘 품절";
+
+    /* ✏️ 묶음 제목 앞에 붙는 그림이에요. 새 묶음을 만들면 여기에도 한 줄 넣어 주세요.
+       (안 넣어도 괜찮아요. 그러면 그림 없이 이름만 나와요.) */
+    const 묶음그림 = {
+      커피: "☕",
+      논커피: "🍵",
+      디저트: "🍰",
+    };
+  </script>
+
+  <style>
+    /* =========================================================
+       ✏️ 사장님이 고치는 곳 ③: 색깔
+       # 뒤의 글자가 색깔 번호예요. 다른 색 번호로 바꾸면 화면 색이 바뀌어요.
+       ========================================================= */
+    /* 📌 예전 색 (갈색 메뉴판으로 되돌리고 싶을 때 아래 번호를 다시 쓰세요)
+       배경색 #4A3728 / 크림색 #F5EFE6 / 강조색 #D9B48F */
+    :root {
+      /* 🎨 지금 쓰는 색: 일본 옛 목판화(우키요에) 색 */
+      --한지: #F3EAD7;     /* 한지 종이색: 바탕 */
+      --먹: #1C1C1C;       /* 먹색: 글자와 굵은 테두리선 */
+      --쪽빛: #1F3A5F;     /* 쪽빛 남색: 제목, 전화 버튼, 파도 */
+      --주홍: #C8432B;     /* 주홍색: 가격, 대표 딱지, 고른 버튼, 해 */
+      --겨자: #D9A441;     /* 겨자색: 작은 장식 */
+      --카드유리: rgba(255, 250, 240, 0.62);  /* 메뉴 카드 유리 (마지막 숫자가 클수록 덜 비쳐요) */
+      --목판화진하기: 0;   /* 아래쪽 파도·산·해 그림 진하기 (0 = 안 보임, 1 = 가장 진함). 지금은 숨겨 뒀어요. 다시 보려면 0.9 로 바꾸세요 */
+      --사진진하기: 0.5;   /* 배경 사진 진하기 (0 = 안 보임, 1 = 사진 그대로). 사진은 자료 폴더의 '배경사진.png' 예요 */
+      --숲노을배경: none;  /* block 으로 바꾸면 예전 숲·노을 배경이 다시 보여요 */
+
+      /* 🌲 예전 숲·노을 배경에서 쓰던 색 (지금은 숨겨 둔 배경에서만 써요) */
+      --배경색: #1F3326;   /* 깊은 숲 초록: 화면 맨 아래 바탕 */
+      --크림색: #FBF4E4;   /* 따뜻한 크림색: 글자 */
+      --강조색: #E8C07A;   /* 노을 금빛: 가격, 버튼, 테두리 */
+      --하늘위: #F6D58E;   /* 노을 하늘 맨 위 색 */
+      --하늘중간: #D9935A; /* 노을 하늘 가운데 색 */
+      --숲색: #3E5A3A;     /* 나무숲 초록 */
+      --유리색: rgba(24, 42, 30, 0.55);  /* 카드 유리 색 (마지막 숫자가 클수록 덜 비쳐요) */
+      --노을진하기: 0.6;   /* 분홍·주황 노을 배경이 얼마나 진하게 보일지 (0 = 안 보임, 1 = 가장 진함) */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html {
-      scroll-behavior: smooth;
-      /* 아이폰을 가로로 돌렸을 때 글자가 멋대로 커지며 깨지는 것을 막아요 */
-      -webkit-text-size-adjust: 100%;
-      text-size-adjust: 100%;
-    }
-
     body {
-      font-family: 'Gowun Dodum', 'Malgun Gothic', '맑은 고딕', sans-serif;
-      color: var(--ink);
-      background-color: var(--sky);
-      /* 은은한 그라데이션: 위는 하늘색, 아래로 갈수록 크림색 + 흐릿한 빛 얼룩 */
-      background-image:
-        radial-gradient(circle at 12% 6%,  rgba(255,255,255,0.75), transparent 40%),
-        radial-gradient(circle at 92% 30%, rgba(143,196,230,0.45), transparent 42%),
-        radial-gradient(circle at 10% 78%, rgba(245,239,230,0.95), transparent 45%),
-        linear-gradient(170deg, var(--sky) 0%, var(--sky-mid) 45%, var(--cream) 100%);
-      background-attachment: fixed;
+      font-family: "Gowun Dodum", "Malgun Gothic", "맑은 고딕", sans-serif;
+      background: var(--배경색);
+      color: var(--크림색);
       min-height: 100vh;
-      line-height: 1.55;
-      /* 한국어 글자가 단어 중간에서 끊겨 줄바꿈되지 않게 하고, 너무 긴 글은 안전하게 줄바꿈해요 */
-      word-break: keep-all;
-      overflow-wrap: break-word;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    /* 휴대폰 폭(390px)에 맞춘 가운데 영역. padding이 바깥 여백입니다. */
-    .page {
-      max-width: 390px;
+    /* 해 질 녘 하늘에서 숲으로 이어지는 배경 */
+    .하늘 {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg,
+        var(--하늘위) 0%,
+        var(--하늘중간) 24%,
+        #8C6B3E 44%,
+        var(--숲색) 64%,
+        var(--배경색) 100%);
+    }
+
+    /* 분홍·주황 구름이 길게 퍼진 노을 그림 (진하기는 위쪽 --노을진하기 숫자로 조절) */
+    .노을 {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: var(--노을진하기);
+      /* 아래쪽은 숲 초록으로 자연스럽게 사라지게 */
+      -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 65%, transparent 100%);
+    }
+
+    /* 오른쪽 위에서 비추는 노을 햇살 */
+    .해 {
+      position: fixed;
+      top: -120px;
+      right: -120px;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 236, 180, 0.95) 0%, rgba(255, 210, 130, 0.45) 35%, rgba(255, 200, 120, 0) 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* 뒤쪽의 거대한 나무와 둥근 창문 건물 그림 */
+    .숲그림 {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 70vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* 유리 카드 뒤로 은은하게 비치는 둥근 빛 */
+    .빛 {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.45;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .빛1 { width: 240px; height: 240px; background: #F2B866; top: 18%; left: -100px; }
+    .빛2 { width: 220px; height: 220px; background: #7FA06A; top: 52%; right: -90px; }
+    .빛3 { width: 240px; height: 240px; background: #C98A4B; bottom: -80px; left: -40px; }
+
+    .화면 {
+      position: relative;
+      z-index: 1;
+      max-width: 430px;
       margin: 0 auto;
-      padding: 36px 20px 96px;   /* 아래 여백이 큰 이유: '맨 위로' 버튼이 마지막 내용을 가리지 않게 */
-    }
-
-    /* ===== 유리 카드 공통 =====
-       - 0.55 = 투명도 (작을수록 더 투명, 커질수록 더 진함)
-       - blur = 뒤 배경을 얼마나 흐리게 할지
-       - border-radius = 모서리 둥근 정도, box-shadow = 그림자 */
-    .glass {
-      background: rgba(245, 239, 230, 0.55);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(63, 134, 184, 0.14);
-    }
-
-    /* ===== 1. 맨 위: 가게 이름 ===== */
-    header {
-      text-align: center;
-      color: var(--ink);
-      padding: 18px 0 30px;
-    }
-    header .location {
-      font-size: 14px;
-      letter-spacing: 1px;
-      color: var(--ink-soft);
-    }
-    header h1 {
-      font-size: 36px;
-      font-weight: normal;
-      margin: 8px 0 10px;
-      letter-spacing: 2px;
-    }
-    header .intro {
-      font-size: 16px;
-      color: var(--ink-soft);
-    }
-
-    /* ===== 시그니처 메뉴 (화면 맨 위 칸) ===== */
-    .section-title {
-      color: var(--ink);
-      font-size: 16px;
-      margin: 8px 6px 12px;
-    }
-    .signature-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 30px;
-    }
-    .signature {
-      padding: 18px 16px 20px;
-    }
-    .badge {
-      display: inline-block;
-      font-size: 12px;
-      color: #fff;
-      background: var(--sky-strong);
-      border-radius: 999px;
-      padding: 3px 12px;
-      margin-bottom: 10px;
-    }
-    .signature .name { font-size: 18px; }
-    .signature .price { font-size: 18px; font-weight: bold; color: var(--sky-strong); margin-top: 4px; }
-
-    /* ===== 시그니처(사장님 추천) 카드 강조 =====
-       - 테두리와 그림자를 하늘색으로 조금 진하게, 배경은 조금 더 밝게 합니다.
-       - 더 눈에 띄게 하고 싶으면 아래 숫자(0.85, 0.28 등)를 키우세요. */
-    .menu-item.is-signature, .signature {
-      background: rgba(255, 252, 247, 0.85);
-      border: 1.5px solid rgba(63, 134, 184, 0.55);
-      box-shadow: 0 12px 30px rgba(63, 134, 184, 0.28);
-    }
-    /* 작은 배지(사장님 추천) 모양: 메뉴 이름 바로 옆에 붙어요 */
-    .tag {
-      display: inline-block;
-      vertical-align: middle;
-      margin-left: 8px;
-      font-size: 13px;
-      line-height: 1;
-      padding: 6px 10px;
-      border-radius: 999px;
-      color: #fff;
-      background: var(--sky-strong);
-    }
-    /* '오늘 품절' 표시 모양 */
-    .tag.soldout-tag { background: #6B7C88; }
-
-    /* ===== 품절 메뉴: 카드를 흐리게 (opacity 숫자가 작을수록 더 흐려져요) ===== */
-    .menu-item.is-soldout, .signature.is-soldout {
-      opacity: 0.55;
-      filter: grayscale(0.7);
-    }
-    .menu-item.is-soldout .menu-price, .signature.is-soldout .price {
-      text-decoration: line-through;   /* 가격에 줄을 그어줘요 */
-    }
-
-    /* ===== 카테고리 버튼 ===== */
-    .tabs {
-      position: sticky;
-      top: 12px;
-      z-index: 10;
+      padding: 32px 16px 40px;
       display: flex;
-      gap: 8px;
-      padding: 8px;
-      margin-bottom: 26px;
+      flex-direction: column;
+      gap: 20px;
     }
-    /* (예전 방식의 링크형 버튼 모양. 지금은 쓰지 않지만 보관해 둡니다) */
-    .tabs a {
-      flex: 1;
+
+    /* 유리처럼 반투명한 카드 (성당 창문 같은 얇은 금색 테두리) */
+    .유리카드 {
+      position: relative;
+      background: var(--유리색);
+      border: 1px solid rgba(232, 192, 122, 0.6);
+      border-radius: 22px;
+      box-shadow:
+        inset 0 0 0 4px rgba(232, 192, 122, 0.08),
+        inset 0 0 0 5px rgba(232, 192, 122, 0.25),
+        0 10px 30px rgba(10, 20, 12, 0.35);
+      backdrop-filter: blur(14px) saturate(130%);
+      -webkit-backdrop-filter: blur(14px) saturate(130%);
+    }
+
+    /* 카드 모서리의 작은 금색 잎사귀 장식 */
+    .유리카드::before,
+    .유리카드::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: var(--강조색);
+      opacity: 0.85;
+      border-radius: 0 100% 0 100%;
+    }
+    .유리카드::before { top: 10px; left: 10px; }
+    .유리카드::after  { bottom: 10px; right: 10px; transform: rotate(180deg); }
+
+    /* 1. 맨 위: 가게 이름과 소개 (둥근 아치 창문 모양) */
+    .머리 {
       text-align: center;
-      text-decoration: none;
-      color: var(--ink);
+      padding: 56px 24px 30px;
+      border-radius: 180px 180px 26px 26px;
+      overflow: hidden;
+    }
+    /* 태양광 판을 장식 유리처럼: 은은한 격자무늬와 무지갯빛 */
+    .머리 .장식유리 {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(90deg, rgba(232, 192, 122, 0.14) 0 1px, transparent 1px 34px),
+        repeating-linear-gradient(0deg, rgba(232, 192, 122, 0.14) 0 1px, transparent 1px 34px),
+        linear-gradient(135deg, rgba(255, 214, 140, 0.18), rgba(120, 170, 120, 0.12) 50%, rgba(140, 160, 220, 0.12));
+    }
+    .머리 .덩굴 {
+      display: block;
+      width: 150px;
+      margin: 0 auto 8px;
+      position: relative;
+    }
+    .머리 h1 {
+      position: relative;
+      font-size: 32px;
+      letter-spacing: 2px;
+      color: var(--강조색);
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    }
+    .머리 p {
+      position: relative;
+      margin-top: 6px;
       font-size: 15px;
-      padding: 9px 0;
-      border-radius: 14px;
-    }
-    .tabs a.active {
-      background: var(--sky-strong);
-      color: #fff;
     }
 
-    /* 카테고리 버튼 (전체 / 커피 / 논커피 / 디저트)
-       - min-height: 버튼 높이입니다. 52px이면 손가락으로 누르기 아주 편해요. 더 크게 하려면 숫자를 키우세요.
-       - 선택 안 된 버튼: 반투명 크림색 / 선택된 버튼(.active): 하늘색 바탕 + 흰 글자 */
-    .tabs button {
-      flex: 1;
-      min-height: 52px;
+    /* 2. 가운데: 메뉴 목록 */
+    .메뉴제목 {
+      font-size: 18px;
+      padding-left: 6px;
+      color: var(--크림색);
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    }
+    .메뉴제목::before { content: "🌿 "; }
+    .메뉴들 {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    /* 카테고리 버튼 줄: 화면을 내려도 맨 위에 붙어서 따라다녀요 */
+    .카테고리줄 {
+      position: sticky;
+      top: 8px;
+      z-index: 5;
+      display: flex;
+      gap: 6px;
+      padding: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-radius: 999px;
+      background: rgba(24, 42, 30, 0.75);
+      border: 1px solid rgba(232, 192, 122, 0.5);
+      box-shadow: 0 8px 24px rgba(10, 20, 12, 0.35);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .카테고리줄::-webkit-scrollbar { display: none; }
+
+    /* 카테고리 버튼 (손가락으로 누르기 편하게 높이 48px) */
+    .카테고리버튼 {
+      flex: 1 1 auto;
+      min-height: 48px;
+      padding: 0 10px;
       border: none;
-      cursor: pointer;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--크림색);
       font-family: inherit;
-      font-size: 17px;
-      color: var(--ink);
-      background: rgba(255, 255, 255, 0.45);
-      border-radius: 16px;
-      -webkit-tap-highlight-color: transparent;
+      font-size: 15px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
     }
-    .tabs button.active {
-      background: var(--sky-strong);
-      color: #fff;
-      box-shadow: 0 6px 14px rgba(63, 134, 184, 0.35);
+    /* 지금 선택된 버튼: 금색으로 채워져요 */
+    .카테고리버튼.선택됨 {
+      background: linear-gradient(135deg, #F6D58E, var(--강조색) 50%, #C98A4B);
+      color: var(--배경색);
+      font-weight: bold;
+      box-shadow: 0 3px 12px rgba(232, 160, 80, 0.45);
     }
-    .tabs button:active { transform: scale(0.97); }
-    .hidden { display: none; }  /* 선택하지 않은 카테고리를 숨길 때 쓰는 표시 */
 
-    /* ===== 2. 가운데: 메뉴 목록 ===== */
-    .category { margin-bottom: 30px; scroll-margin-top: 90px; }
-    .category h2 {
-      color: var(--ink);
-      font-size: 22px;
-      font-weight: normal;
-      margin: 0 6px 14px;
+    /* 고르지 않은 카테고리의 메뉴는 확실히 숨겨요 */
+    [hidden] { display: none !important; }
+
+    /* 버튼을 누르면 메뉴 시작 부분이 버튼 줄에 가려지지 않게 */
+    #메뉴구역 { scroll-margin-top: 80px; }
+
+    /* 커피 / 논커피 / 디저트 묶음 제목 (양옆에 금색 줄) */
+    .묶음제목 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      font-size: 17px;
+      color: var(--강조색);
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
     }
-    /* 메뉴 카드 하나. padding = 카드 안쪽 여백, margin-bottom = 카드 사이 간격 */
-    .menu-item {
-      padding: 20px 20px 18px;
-      margin-bottom: 14px;
+    .묶음제목:first-child { margin-top: 0; }
+    .묶음제목::before,
+    .묶음제목::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232, 192, 122, 0.7), transparent);
     }
-    .menu-top {
+
+    .메뉴 {
+      padding: 20px 26px;
+    }
+    .메뉴윗줄 {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
       gap: 12px;
     }
-    .menu-name { font-size: 19px; }
-    /* 가격: 조금 크고 진하게 + 포인트 색 (더 눈에 띄게 하려면 font-size를 키우세요) */
-    .menu-price { font-size: 19px; font-weight: bold; color: var(--sky-strong); white-space: nowrap; }
-    .menu-desc {
-      font-size: 15px;
-      color: var(--ink-soft);
-      margin-top: 6px;
-    }
+    .메뉴이름 { font-size: 18px; }
 
-    /* ===== 3. 맨 아래: 영업시간·전화 ===== */
-    footer { padding: 24px 22px 24px; margin-top: 8px; }
-    footer h3 { font-size: 19px; font-weight: normal; margin-bottom: 12px; }
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      font-size: 16px;
-      padding: 9px 0;
-      border-bottom: 1px dashed rgba(47, 74, 94, 0.2);
+    /* 대표 메뉴 카드: 금색 테두리를 더 진하게 */
+    .메뉴.대표메뉴 {
+      border-color: rgba(232, 192, 122, 0.95);
+      box-shadow:
+        inset 0 0 0 4px rgba(232, 192, 122, 0.12),
+        inset 0 0 0 5px rgba(232, 192, 122, 0.4),
+        0 10px 30px rgba(10, 20, 12, 0.35),
+        0 0 18px rgba(232, 192, 122, 0.3);
     }
-    .info-row:last-of-type { border-bottom: none; }
-    .info-row span:first-child { color: var(--ink-soft); white-space: nowrap; }
-    .info-row span:last-child { text-align: right; }
-    /* 인스타 링크: 글자는 그대로 두고 눌리는 영역만 위아래로 넓혀서 손가락으로 누르기 편하게 해요 */
-    .info-row a {
-      color: var(--sky-strong);
+    /* '⭐ 대표' 딱지 */
+    .대표딱지 {
       display: inline-block;
-      padding: 12px 0 12px 12px;
-      margin: -12px 0;
+      margin-left: 6px;
+      padding: 1px 8px;
+      border-radius: 999px;
+      background: var(--강조색);
+      color: var(--배경색);
+      font-size: 12px;
+      vertical-align: 3px;
+    }
+    .메뉴가격 {
+      font-size: 17px;
+      color: var(--강조색);
+      white-space: nowrap;
+    }
+    .메뉴설명 {
+      margin-top: 4px;
+      font-size: 14px;
+      opacity: 0.8;
     }
 
-    /* 전화 걸기 버튼: min-height = 버튼 높이 */
-    .call-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 56px;
+    /* 3. 맨 아래: 영업시간과 전화 버튼 */
+    .바닥 {
+      padding: 22px 20px;
       text-align: center;
-      text-decoration: none;
-      background: var(--sky-strong);
-      color: #fff;
-      font-family: inherit;
-      font-size: 18px;
-      border-radius: 18px;
-      margin-top: 20px;
-      box-shadow: 0 8px 18px rgba(63, 134, 184, 0.35);
     }
-    .call-btn:active { transform: scale(0.98); }
+    .바닥 h2 {
+      font-size: 16px;
+      color: var(--강조색);
+    }
+    .바닥 .시간 {
+      margin-top: 6px;
+      font-size: 15px;
+    }
+    .전화버튼 {
+      position: relative;
+      overflow: hidden;
+      display: block;
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #F6D58E, var(--강조색) 50%, #C98A4B);
+      color: var(--배경색);
+      font-size: 17px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 6px 22px rgba(232, 160, 80, 0.45);
+    }
+    .전화버튼:active { transform: scale(0.98); }
 
-    /* ===== '맨 위로' 버튼: 아래로 조금 내리면 오른쪽 아래에 나타나요 (길게 스크롤할 때 편해요) ===== */
-    .to-top {
+    /* 위치와 인스타 */
+    .바닥 .위치 {
+      margin-top: 4px;
+      font-size: 15px;
+    }
+    .인스타 {
+      display: inline-block;
+      margin-top: 14px;
+      color: var(--강조색);
+      font-size: 15px;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(232, 192, 122, 0.5);
+    }
+
+    /* 버튼 위를 지나가는 금빛 반짝임 */
+    .전화버튼::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+      animation: 반짝 3.5s ease-in-out infinite;
+    }
+    @keyframes 반짝 {
+      0%, 60% { left: -60%; }
+      100%    { left: 130%; }
+    }
+    /* 움직임을 줄이도록 설정한 휴대폰에서는 반짝임을 멈춰요 */
+    @media (prefers-reduced-motion: reduce) {
+      .전화버튼::after { animation: none; display: none; }
+    }
+
+    /* =========================================================
+       🎨 목판화(우키요에) 디자인
+       위에 있는 예전 꾸밈을 지우지 않고, 여기서 덮어써요.
+       이 부분을 통째로 지우면 예전 숲속 디자인으로 돌아가요.
+       (그때는 위쪽 --숲노을배경 도 block 으로 바꿔 주세요)
+       ========================================================= */
+
+    /* 예전 숲·노을 배경은 숨겨 둬요 */
+    .하늘, .노을, .해, .숲그림, .빛 { display: var(--숲노을배경); }
+
+    /* 바탕: 한지 종이 질감 + 위는 연한 쪽빛, 아래는 연한 주홍빛 */
+    body {
+      color: var(--먹);
+      background-color: var(--한지);
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.36 0 0 0 0 0.22 0 0 0 0.28 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+        linear-gradient(180deg, rgba(31, 58, 95, 0.16) 0%, rgba(243, 234, 215, 0) 40%, rgba(200, 67, 43, 0.12) 100%);
+      background-attachment: fixed;
+    }
+
+    /* 아래쪽 파도·산·해 그림 */
+    .목판화배경 {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 48vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: var(--목판화진하기);
+    }
+
+    /* 여백을 넉넉하게 */
+    .화면 {
+      padding: 40px 20px 64px;
+      gap: 28px;
+    }
+    .메뉴들 { gap: 16px; }
+
+    /* 유리 카드: 반투명 + 먹색 테두리 + 부드러운 그림자 */
+    .유리카드 {
+      background: var(--카드유리);
+      border: 2px solid var(--먹);
+      border-radius: 20px;
+      box-shadow: 0 10px 28px rgba(28, 28, 28, 0.12), 0 2px 6px rgba(28, 28, 28, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    /* 카드 모서리 장식: 작은 주홍 해 하나만 */
+    .유리카드::before {
+      width: 8px;
+      height: 8px;
+      top: 12px;
+      left: 12px;
+      border-radius: 50%;
+      background: var(--주홍);
+      opacity: 1;
+    }
+    .유리카드::after { display: none; }
+
+    /* 1. 맨 위: 가게 이름 */
+    .머리 { padding: 52px 24px 32px; }
+    .머리 .장식유리 {
+      background: linear-gradient(180deg, rgba(31, 58, 95, 0.12), rgba(31, 58, 95, 0) 70%);
+    }
+    .머리 .덩굴 path[fill="none"] { stroke: var(--주홍); stroke-width: 2; }
+    .머리 .덩굴 path:not([fill="none"]) { fill: var(--주홍); }
+    .머리 h1 {
+      font-size: 34px;
+      color: var(--쪽빛);
+      text-shadow: none;
+    }
+    .머리 p {
+      margin-top: 8px;
+      font-size: 16px;
+    }
+
+    /* 2. 메뉴 */
+    .메뉴제목 {
+      font-size: 20px;
+      color: var(--먹);
+      text-shadow: none;
+    }
+    .메뉴제목::before { content: "● "; color: var(--주홍); }
+
+    .카테고리줄 {
+      gap: 4px;
+      padding: 6px;
+      background: rgba(243, 234, 215, 0.8);
+      border: 2px solid var(--먹);
+      box-shadow: 0 8px 22px rgba(28, 28, 28, 0.12);
+    }
+    .카테고리버튼 {
+      min-height: 52px;
+      padding: 0 8px;
+      color: var(--먹);
+      font-size: 16px;
+    }
+    .카테고리버튼.선택됨 {
+      background: var(--주홍);
+      color: #FFFFFF;
+      box-shadow: 0 3px 10px rgba(200, 67, 43, 0.35);
+    }
+
+    .묶음제목 {
+      margin-top: 24px;
+      font-size: 19px;
+      color: var(--쪽빛);
+      text-shadow: none;
+    }
+    .묶음제목::before,
+    .묶음제목::after {
+      height: 2px;
+      background: rgba(28, 28, 28, 0.55);
+    }
+
+    .메뉴 { padding: 22px 24px; }
+    .메뉴이름 { font-size: 19px; }
+    .메뉴가격 {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--주홍);
+    }
+    .메뉴설명 {
+      margin-top: 6px;
+      font-size: 15px;
+      opacity: 0.75;
+    }
+
+    /* 대표 메뉴: 테두리를 주홍으로 */
+    .메뉴.대표메뉴 {
+      border-color: var(--주홍);
+      box-shadow: 0 10px 28px rgba(200, 67, 43, 0.18), 0 2px 6px rgba(28, 28, 28, 0.08);
+    }
+    .대표딱지 {
+      padding: 2px 9px;
+      background: var(--주홍);
+      color: #FFFFFF;
+      font-size: 13px;
+    }
+
+    /* ⭐ 시그니처 카드: 더 굵은 주홍 테두리 + 아주 연한 주홍빛 바탕 */
+    .메뉴.대표메뉴 {
+      border-width: 3px;
+      background-image: linear-gradient(135deg, rgba(200, 67, 43, 0.10), rgba(217, 164, 65, 0.08));
+    }
+
+    /* 🚫 품절 카드: 흐리게 + 가격에 줄 긋기 */
+    .메뉴.품절메뉴 {
+      opacity: 0.5;
+      filter: grayscale(0.9);
+    }
+    .메뉴.품절메뉴 .메뉴가격 { text-decoration: line-through; }
+    .품절딱지 {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 2px 9px;
+      border-radius: 999px;
+      background: #555555;
+      color: #FFFFFF;
+      font-size: 13px;
+      vertical-align: 3px;
+    }
+
+    /* 3. 맨 아래 */
+    .바닥 { padding: 28px 22px; }
+    .바닥 h2 {
+      font-size: 18px;
+      color: var(--쪽빛);
+    }
+    .바닥 .시간,
+    .바닥 .위치 { font-size: 16px; }
+    .전화버튼 {
+      min-height: 56px;
+      margin-top: 22px;
+      padding: 16px;
+      background: var(--쪽빛);
+      color: var(--한지);
+      font-size: 18px;
+      border: 2px solid var(--먹);
+      box-shadow: 0 8px 20px rgba(31, 58, 95, 0.3);
+    }
+    .전화버튼::after {
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    }
+    .인스타 {
+      margin-top: 18px;
+      padding: 8px 4px;
+      color: var(--쪽빛);
+      font-size: 16px;
+      border-bottom: 2px solid rgba(31, 58, 95, 0.4);
+    }
+
+    /* =========================================================
+       📱 휴대폰 점검 후 고친 부분
+       ========================================================= */
+
+    /* 휴대폰을 가로로 돌려도 글자가 갑자기 커지지 않게 */
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+    /* 버튼을 누를 때 생기는 파란 네모 번쩍임 없애기 */
+    a, button { -webkit-tap-highlight-color: transparent; }
+
+    /* 가게 이름 칸의 둥근 아치 모양이 목판화 디자인에서 사라졌던 것을 되살려요 */
+    .머리.유리카드 { border-radius: 180px 180px 26px 26px; }
+
+    /* 한글 낱말이 중간에서 잘리지 않게 (예: '아메리카 / 노' 방지) */
+    body { word-break: keep-all; overflow-wrap: break-word; }
+
+    /* 아래쪽 파도 그림 위에서도 글자가 잘 읽히게 */
+    .목판화배경 { height: 32vh; }
+    .유리카드 { background: rgba(255, 250, 240, 0.8); }
+    .묶음제목 {
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(243, 234, 215, 0.88);
+    }
+    .메뉴제목 {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 4px 14px 4px 10px;
+      border-radius: 999px;
+      background: rgba(243, 234, 215, 0.88);
+    }
+
+    /* 품절 카드: 카드 전체가 아니라 글자만 흐리게, '오늘 품절' 딱지는 또렷하게 */
+    .메뉴.품절메뉴 { opacity: 1; filter: grayscale(1); }
+    .메뉴.품절메뉴 .메뉴윗줄,
+    .메뉴.품절메뉴 .메뉴설명 { opacity: 0.45; }
+    .메뉴.품절메뉴 .품절딱지 {
+      margin: 10px 0 0;
+      padding: 4px 12px;
+      font-size: 14px;
+      background: #333333;
+    }
+
+    /* 딱지 글자가 두 줄로 쪼개지지 않게 */
+    .대표딱지, .품절딱지 { white-space: nowrap; }
+
+    /* 영업시간을 한 줄씩 나눠서 보여줘요 (평일 / 주말 / 휴무) */
+    .바닥 .시간 span { display: block; }
+
+    /* 인스타 글자도 손가락으로 누르기 편하게 높이 48px */
+    .인스타 {
+      display: inline-flex;
+      align-items: center;
+      min-height: 48px;
+    }
+
+    /* 폭이 좁은 휴대폰(가로 380px 이하)에서는 카테고리 버튼 4개가 한 줄에 다 들어가게 */
+    @media (max-width: 380px) {
+      .화면 { padding-left: 14px; padding-right: 14px; }
+      .카테고리버튼 { padding: 0 4px; font-size: 15px; }
+      .메뉴 { padding: 20px 20px; }
+      .메뉴윗줄 { gap: 8px; }
+    }
+
+    /* 휴대폰을 가로로 돌렸을 때: 아래 파도 그림이 화면 절반을 덮지 않게 낮추고 흐리게 */
+    @media (orientation: landscape) and (max-height: 500px) {
+      .목판화배경 { height: 35vh; opacity: calc(var(--목판화진하기) * 0.6); }
+      .화면 { padding-top: 20px; }
+      .머리 { padding: 36px 24px 24px; }
+    }
+
+    /* ▲ 맨 위로 버튼: 아래로 많이 내려가면 오른쪽 아래에 나타나요 */
+    .맨위로 {
       position: fixed;
       right: 16px;
       bottom: 20px;
+      z-index: 10;
       width: 52px;
       height: 52px;
-      border: none;
       border-radius: 50%;
+      border: 2px solid var(--먹);
+      background: rgba(243, 234, 215, 0.92);
+      color: var(--쪽빛);
       font-family: inherit;
-      font-size: 22px;
-      color: #fff;
-      background: var(--sky-strong);
-      box-shadow: 0 8px 18px rgba(63, 134, 184, 0.4);
+      font-size: 13px;
+      line-height: 1.2;
       cursor: pointer;
-      z-index: 20;
+      box-shadow: 0 6px 16px rgba(28, 28, 28, 0.2);
       opacity: 0;
-      pointer-events: none;           /* 숨겨져 있을 때는 눌리지 않게 */
-      transition: opacity 0.2s;
-      -webkit-tap-highlight-color: transparent;
+      visibility: hidden;
+      transition: opacity 0.25s, visibility 0.25s;
     }
-    .to-top.show { opacity: 1; pointer-events: auto; }
+    .맨위로.보임 { opacity: 1; visibility: visible; }
 
-    /* ===== 휴대폰을 가로로 돌렸을 때 (화면 높이가 낮을 때) =====
-       - 위쪽 버튼 줄이 화면을 너무 많이 차지하지 않게 따라다니지 않도록 하고
-       - 위아래 여백을 줄이고, 내용 폭을 조금 넓혀요. */
-    @media (orientation: landscape) and (max-height: 520px) {
-      .page { max-width: 560px; padding-top: 16px; padding-bottom: 80px; }
-      header { padding: 8px 0 16px; }
-      header h1 { font-size: 30px; margin: 4px 0 6px; }
-      .tabs { position: static; margin-bottom: 18px; }
-      .category { scroll-margin-top: 16px; }
+    /* =========================================================
+       🖼️ 배경 사진 (자료 폴더의 배경사진.png)
+       다른 사진으로 바꾸려면 자료 폴더에 같은 이름으로 사진을 넣으세요.
+       진하기는 위쪽 ✏️ ③ 의 --사진진하기 숫자로 바꿔요.
+       ========================================================= */
+    .배경사진 {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image: url("자료/배경사진.png");
+      background-size: cover;
+      background-position: center;
+      opacity: var(--사진진하기);
     }
   </style>
 </head>
 <body>
-  <div class="page">
+  <!-- 🖼️ 배경 사진 (진하기 50%) -->
+  <div class="배경사진"></div>
 
-    <!-- ===== 1. 맨 위: 가게 이름과 한 줄 소개 =====
-         글자만 바꾸면 됩니다. -->
-    <header>
-      <p class="location">광주 북구 비엔날레</p>
-      <h1>브릿지 커피</h1>
-      <p class="intro">매일 직접 볶는 스페셜티 커피</p>
+  <!-- 배경: 노을 하늘, 햇살, 거대한 나무와 아치 창문 건물 -->
+  <div class="하늘"></div>
+  <!-- 분홍·주황 노을 구름과 먼 산 -->
+  <svg class="노을" viewBox="0 0 390 680" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="노을하늘" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0"    stop-color="#7A3B6E"/>
+        <stop offset="0.25" stop-color="#C2456B"/>
+        <stop offset="0.5"  stop-color="#E8705A"/>
+        <stop offset="0.7"  stop-color="#F2A15C"/>
+        <stop offset="0.9"  stop-color="#D9606A"/>
+        <stop offset="1"    stop-color="#8C3F5C"/>
+      </linearGradient>
+      <filter id="구름번짐" x="-20%" y="-50%" width="140%" height="200%">
+        <feGaussianBlur stdDeviation="5"/>
+      </filter>
+    </defs>
+    <rect width="390" height="680" fill="url(#노을하늘)"/>
+    <!-- 길게 퍼진 구름 줄무늬 -->
+    <g filter="url(#구름번짐)">
+      <ellipse cx="120" cy="40"  rx="260" ry="14" fill="#9C3D6E" opacity="0.7"/>
+      <ellipse cx="300" cy="95"  rx="230" ry="12" fill="#F7B48A" opacity="0.6"/>
+      <ellipse cx="80"  cy="140" rx="220" ry="16" fill="#A8406C" opacity="0.65"/>
+      <ellipse cx="250" cy="190" rx="260" ry="10" fill="#FFD6A8" opacity="0.7"/>
+      <ellipse cx="140" cy="235" rx="240" ry="14" fill="#B8456A" opacity="0.6"/>
+      <ellipse cx="320" cy="285" rx="220" ry="11" fill="#F7A27A" opacity="0.65"/>
+      <ellipse cx="60"  cy="330" rx="230" ry="13" fill="#C24E6A" opacity="0.55"/>
+      <ellipse cx="230" cy="380" rx="260" ry="9"  fill="#FFC48E" opacity="0.6"/>
+      <ellipse cx="150" cy="430" rx="240" ry="13" fill="#B04466" opacity="0.55"/>
+      <ellipse cx="300" cy="475" rx="200" ry="10" fill="#F59A72" opacity="0.6"/>
+      <ellipse cx="100" cy="520" rx="230" ry="12" fill="#A33F62" opacity="0.5"/>
+    </g>
+    <!-- 멀리 보이는 산 -->
+    <path fill="#3A2A3E" opacity="0.85"
+      d="M0 600 L40 588 L90 592 L150 575 L190 560 L215 552 L240 562 L280 570 L330 582 L390 578 V680 H0 Z"/>
+  </svg>
+  <div class="해"></div>
+  <svg class="숲그림" viewBox="0 0 390 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <!-- 멀리 있는 아치 창문 건물 -->
+    <g fill="#5C4A2E" opacity="0.55">
+      <path d="M150 600 V330 Q195 270 240 330 V600 Z"/>
+      <path d="M60 600 V400 Q90 360 120 400 V600 Z"/>
+      <path d="M270 600 V380 Q305 335 340 380 V600 Z"/>
+    </g>
+    <!-- 건물 창문의 따뜻한 불빛 (장식 유리) -->
+    <g fill="#F6D58E" opacity="0.5">
+      <path d="M180 420 V360 Q195 340 210 360 V420 Z"/>
+      <path d="M296 450 V405 Q305 390 314 405 V450 Z"/>
+      <path d="M82 470 V425 Q90 412 98 425 V470 Z"/>
+    </g>
+    <!-- 왼쪽 거대한 나무 -->
+    <g fill="#2C4630" opacity="0.9">
+      <path d="M40 600 C45 520 30 460 55 380 L75 380 C95 460 80 520 90 600 Z"/>
+      <ellipse cx="65" cy="330" rx="110" ry="80"/>
+      <ellipse cx="10" cy="380" rx="70" ry="50"/>
+      <ellipse cx="120" cy="370" rx="70" ry="45"/>
+    </g>
+    <!-- 오른쪽 거대한 나무 -->
+    <g fill="#26402B" opacity="0.92">
+      <path d="M318 600 C322 530 305 470 330 410 L350 410 C368 470 355 530 362 600 Z"/>
+      <ellipse cx="340" cy="360" rx="100" ry="75"/>
+      <ellipse cx="390" cy="410" rx="60" ry="45"/>
+      <ellipse cx="285" cy="400" rx="60" ry="40"/>
+    </g>
+    <!-- 앞쪽 풀숲 -->
+    <path fill="#1F3326" d="M0 600 V540 Q40 510 80 535 Q120 500 170 530 Q210 505 250 530 Q300 500 340 528 Q370 512 390 525 V600 Z"/>
+  </svg>
+  <div class="빛 빛1"></div>
+  <div class="빛 빛2"></div>
+  <div class="빛 빛3"></div>
+
+  <!-- 목판화 배경: 붉은 해, 눈 덮인 산, 안개띠, 굽이치는 파도 -->
+  <svg class="목판화배경" viewBox="0 0 390 360" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <g stroke="#1C1C1C" stroke-linejoin="round" stroke-linecap="round">
+      <!-- 붉은 해 -->
+      <circle cx="305" cy="80" r="42" fill="#C8432B" stroke-width="3"/>
+      <!-- 눈 덮인 산 -->
+      <path d="M110 250 L190 120 L270 250 Z" fill="#4A6A8C" stroke-width="3"/>
+      <path d="M166 159 L190 120 L214 159 Q206 152 200 161 Q195 150 190 161 Q185 150 180 161 Q174 152 166 159 Z" fill="#F3EAD7" stroke-width="2"/>
+      <!-- 안개띠 -->
+      <rect x="-20" y="200" width="250" height="18" rx="9" fill="#E9C9A0" stroke-width="2"/>
+      <rect x="215" y="178" width="200" height="16" rx="8" fill="#E8B4A6" stroke-width="2"/>
+      <!-- 뒤쪽 파도 -->
+      <path d="M0 360 V262 Q40 232 80 257 Q120 282 160 252 Q200 222 240 254 Q280 284 320 250 Q360 222 390 247 V360 Z" fill="#1F3A5F" stroke-width="3"/>
+      <!-- 왼쪽 크게 말려 올라가는 파도 -->
+      <path d="M-10 360 C0 250 60 190 135 208 C105 214 88 234 97 256 C108 240 128 238 138 250 C112 262 102 300 122 360 Z" fill="#2E5C8A" stroke-width="3"/>
+      <!-- 앞쪽 파도 -->
+      <path d="M0 360 V305 Q50 275 100 302 Q150 330 200 296 Q250 266 300 300 Q345 326 390 294 V360 Z" fill="#2E5C8A" stroke-width="3"/>
+    </g>
+    <!-- 하얀 물거품 -->
+    <g fill="none" stroke="#F3EAD7" stroke-width="3" stroke-linecap="round">
+      <path d="M20 262 Q60 214 128 210"/>
+      <path d="M210 290 Q250 270 290 296"/>
+      <path d="M30 312 Q60 292 92 304"/>
+      <path d="M290 262 Q320 242 352 250"/>
+    </g>
+    <g fill="#F3EAD7" stroke="#1C1C1C" stroke-width="1.5">
+      <circle cx="132" cy="206" r="5"/>
+      <circle cx="120" cy="198" r="4"/>
+      <circle cx="140" cy="196" r="3.5"/>
+      <circle cx="108" cy="204" r="3"/>
+    </g>
+  </svg>
+
+  <main class="화면">
+    <!-- 1. 맨 위: 가게 이름과 한 줄 소개 -->
+    <header class="머리 유리카드">
+      <div class="장식유리"></div>
+      <!-- 가게 이름 위 금색 덩굴 장식 -->
+      <svg class="덩굴" viewBox="0 0 150 24" aria-hidden="true">
+        <path d="M5 12 C30 0, 45 24, 75 12 C105 0, 120 24, 145 12" fill="none" stroke="#E8C07A" stroke-width="1.5"/>
+        <path d="M75 12 m-6 0 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0" fill="#E8C07A"/>
+        <path d="M38 9 q6 -8 12 -2 q-6 6 -12 2 z" fill="#E8C07A"/>
+        <path d="M112 15 q-6 8 -12 2 q6 -6 12 -2 z" fill="#E8C07A"/>
+      </svg>
+      <h1 id="가게이름"></h1>
+      <p id="가게소개"></p>
     </header>
 
-    <!-- 카테고리 버튼: 화면 위쪽에 가로로 놓입니다. (전체 + 메뉴 정보의 카테고리 이름들이 자동으로 만들어져요) -->
-    <nav class="tabs glass" id="tabs"></nav>
+    <!-- 카테고리 버튼 줄 (버튼은 메뉴의 '묶음' 이름으로 자동으로 만들어져요) -->
+    <nav class="카테고리줄" id="카테고리줄" aria-label="메뉴 카테고리"></nav>
 
-    <!-- 시그니처 메뉴 (위 메뉴 정보에서 '시그니처: true'인 메뉴가 자동으로 나옵니다)
-         '전체' 버튼일 때만 보이고, 다른 카테고리를 누르면 숨겨져요. -->
-    <div id="signature-area">
-      <p class="section-title">★ 시그니처 메뉴</p>
-      <div class="signature-list" id="signature-list"></div>
-    </div>
+    <!-- 2. 가운데: 메뉴 목록 (내용은 위쪽 '메뉴목록'에서 자동으로 채워져요) -->
+    <section id="메뉴구역">
+      <h2 class="메뉴제목">메뉴</h2>
+      <div class="메뉴들" id="메뉴들"></div>
+    </section>
 
-    <!-- ===== 2. 가운데: 메뉴 목록 (자바스크립트가 아래 데이터로 자동으로 그려줍니다) ===== -->
-    <main id="menu"></main>
-
-    <!-- ===== 3. 맨 아래: 영업시간과 전화 걸기 ===== -->
-    <footer class="glass">
-      <h3>매장 안내</h3>
-      <!-- 영업시간·전화번호·인스타 등은 아래 글자만 바꾸세요 -->
-      <div class="info-row"><span>평일</span><span>08:00 ~ 21:00</span></div>
-      <div class="info-row"><span>주말</span><span>10:00 ~ 20:00</span></div>
-      <div class="info-row"><span>휴무</span><span>목요일</span></div>
-      <div class="info-row"><span>주차</span><span>2대 가능</span></div>
-      <div class="info-row"><span>좌석</span><span>1인 좌석 6석</span></div>
-      <div class="info-row"><span>인스타</span><span><a href="https://www.instagram.com/bridge_coffee" target="_blank" rel="noopener">@bridge_coffee</a></span></div>
-
-      <!-- 전화번호를 바꿀 때: 아래 href의 숫자(하이픈 없이)와 버튼 글자 두 곳을 같이 바꾸세요 -->
-      <a class="call-btn" href="tel:0620000000">📞 전화 걸기 (062-000-0000)</a>
+    <!-- 3. 맨 아래: 영업시간과 전화 걸기 버튼 -->
+    <footer class="바닥 유리카드">
+      <h2>영업시간</h2>
+      <p class="시간" id="영업시간"></p>
+      <p class="위치" id="위치"></p>
+      <a class="전화버튼" id="전화버튼" href="#">📞 전화 걸기</a>
+      <a class="인스타" id="인스타" href="#" target="_blank" rel="noopener"></a>
     </footer>
+  </main>
 
-  </div>
-
-  <!-- 맨 위로 올라가는 버튼 (스크롤을 내리면 자동으로 나타나요) -->
-  <button type="button" class="to-top" id="to-top" aria-label="맨 위로">↑</button>
+  <!-- 맨 위로 버튼 (아래로 많이 내렸을 때만 보여요) -->
+  <button type="button" class="맨위로" id="맨위로" aria-label="맨 위로 가기">▲<br>위로</button>
 
   <script>
-    /* 메뉴 정보(가격·이름·설명)는 이 파일 맨 위쪽의 "메뉴 정보" 칸으로 옮겼습니다. 메뉴를 고칠 때는 위로 가세요. */
+    // 아래는 위에 적은 가게 정보와 메뉴를 화면에 옮겨 주는 부분이에요. 고치지 않아도 돼요.
+    document.getElementById("가게이름").textContent = 가게정보.이름;
+    document.getElementById("가게소개").textContent = 가게정보.소개;
+    // 영업시간은 · 표시마다 한 줄씩 나눠서 보여줘요 (어색한 곳에서 줄이 바뀌지 않게)
+    const 영업시간칸 = document.getElementById("영업시간");
+    가게정보.영업시간.split("·").forEach(function (한줄) {
+      const 줄 = document.createElement("span");
+      줄.textContent = 한줄.trim();
+      영업시간칸.append(줄);
+    });
+    document.getElementById("전화버튼").href = "tel:" + 가게정보.전화번호.replace(/[^0-9+]/g, "");
+    document.title = 가게정보.이름 + " 메뉴판";
 
-    /* ---------- 아래부터는 화면을 그리는 코드입니다. 보통은 건드리지 않아도 됩니다. ---------- */
+    // 위치: 비어 있으면 숨겨요
+    const 위치칸 = document.getElementById("위치");
+    if (가게정보.위치) 위치칸.textContent = "📍 " + 가게정보.위치;
+    else 위치칸.remove();
 
-    // 4500 -> "4,500원"
-    function 원(가격) {
-      return 가격.toLocaleString("ko-KR") + "원";
+    // 인스타: 누르면 인스타그램이 열려요. 비어 있으면 숨겨요
+    const 인스타칸 = document.getElementById("인스타");
+    if (가게정보.인스타) {
+      인스타칸.textContent = "📷 인스타그램 @" + 가게정보.인스타;
+      인스타칸.href = "https://www.instagram.com/" + 가게정보.인스타 + "/";
+    } else {
+      인스타칸.remove();
     }
 
-    const 메뉴칸 = document.getElementById("menu");
-    const 탭칸 = document.getElementById("tabs");
-    const 대표칸 = document.getElementById("signature-list");
+    const 메뉴들 = document.getElementById("메뉴들");
 
-    메뉴.forEach(function (묶음, 번호) {
-      const 아이디 = "cat-" + 번호;
-
-      // 카테고리 버튼 (예전 방식: 누르면 그 위치로 스크롤. 지금은 아래 "필터 버튼"으로 대체해서 쓰지 않아요)
-      /*
-      const 탭 = document.createElement("a");
-      탭.href = "#" + 아이디;
-      탭.textContent = 묶음.카테고리;
-      탭칸.appendChild(탭);
-      */
-
-      // 카테고리 제목 + 메뉴 카드들
-      const 구역 = document.createElement("section");
-      구역.className = "category";
-      구역.id = 아이디;
-
-      const 제목 = document.createElement("h2");
-      제목.textContent = 묶음.카테고리;
-      구역.appendChild(제목);
-
-      묶음.목록.forEach(function (항목) {
-        const 카드 = document.createElement("div");
-        카드.className = "menu-item glass";
-
-        const 윗줄 = document.createElement("div");
-        윗줄.className = "menu-top";
-
-        const 이름 = document.createElement("span");
-        이름.className = "menu-name";
-        이름.textContent = 항목.이름;
-
-        // 시그니처: true 이면 이름 옆에 배지(사장님 추천)를 달고 카드를 살짝 강조합니다
-        if (항목.시그니처) {
-          카드.classList.add("is-signature");
-          const 배지 = document.createElement("span");
-          배지.className = "tag";
-          배지.textContent = 배지글자;
-          이름.appendChild(배지);
-        }
-        // 품절: 1 이면 카드를 흐리게 하고 '오늘 품절' 표시를 답니다
-        if (항목.품절 === 1) {
-          카드.classList.add("is-soldout");
-          const 품절표시 = document.createElement("span");
-          품절표시.className = "tag soldout-tag";
-          품절표시.textContent = 품절글자;
-          이름.appendChild(품절표시);
-        }
-
-        const 가격 = document.createElement("span");
-        가격.className = "menu-price";
-        가격.textContent = 원(항목.가격);
-
-        윗줄.appendChild(이름);
-        윗줄.appendChild(가격);
-
-        const 설명 = document.createElement("p");
-        설명.className = "menu-desc";
-        설명.textContent = 항목.설명;
-
-        카드.appendChild(윗줄);
-        카드.appendChild(설명);
-        구역.appendChild(카드);
-
-        // 화면 맨 위 '시그니처 메뉴' 칸의 카드
-        if (항목.시그니처) {
-          const 대표 = document.createElement("div");
-          대표.className = "signature glass" + (항목.품절 === 1 ? " is-soldout" : "");
-          const 표시 = document.createElement("span");
-          표시.className = "badge";
-          표시.textContent = (항목.품절 === 1) ? 품절글자 : 배지글자;
-          const 대표이름 = document.createElement("p");
-          대표이름.className = "name";
-          대표이름.textContent = 항목.이름;
-          const 대표가격 = document.createElement("p");
-          대표가격.className = "price";
-          대표가격.textContent = 원(항목.가격);
-          대표.appendChild(표시);
-          대표.appendChild(대표이름);
-          대표.appendChild(대표가격);
-          대표칸.appendChild(대표);
-        }
-      });
-
-      메뉴칸.appendChild(구역);
+    // 묶음 이름을 처음 나온 순서대로 모아요 (예: 커피 → 논커피 → 디저트)
+    const 묶음순서 = [];
+    메뉴목록.forEach(function (메뉴) {
+      const 묶음이름 = 메뉴.묶음 || "기타";
+      if (!묶음순서.includes(묶음이름)) 묶음순서.push(묶음이름);
     });
 
-    // (예전 방식) 스크롤하면 지금 보는 카테고리 버튼이 진하게 표시되던 코드. 지금은 쓰지 않아 막아 두었어요.
-    /*
-    const 탭들 = Array.from(탭칸.querySelectorAll("a"));
-    const 구역들 = Array.from(document.querySelectorAll(".category"));
+    묶음순서.forEach(function (묶음이름) {
+      const 묶음제목 = document.createElement("h3");
+      묶음제목.className = "묶음제목";
+      묶음제목.setAttribute("data-group", 묶음이름);
+      묶음제목.textContent = (묶음그림[묶음이름] ? 묶음그림[묶음이름] + " " : "") + 묶음이름;
+      메뉴들.append(묶음제목);
 
-    function 현재탭표시() {
-      let 현재 = 0;
-      구역들.forEach(function (구역, i) {
-        if (구역.getBoundingClientRect().top < 140) 현재 = i;
-      });
-      탭들.forEach(function (탭, i) {
-        탭.classList.toggle("active", i === 현재);
-      });
-    }
-    window.addEventListener("scroll", 현재탭표시, { passive: true });
-    현재탭표시();
-    */
+      메뉴목록
+        .filter(function (메뉴) { return (메뉴.묶음 || "기타") === 묶음이름; })
+        .forEach(메뉴카드만들기);
+    });
 
-    /* =====================================================
-       카테고리 필터 버튼 (전체 / 커피 / 논커피 / 디저트)
-       - 버튼 이름은 맨 위 "메뉴 정보"의 카테고리 이름으로 자동으로 만들어져요.
-       - 맨 앞의 "전체" 글자를 바꾸고 싶으면 아래 첫 번째 줄의 "전체"만 고치세요.
-       - 처음 화면에는 '전체'가 선택돼 있고, 시그니처 메뉴 칸은 '전체'일 때만 보여요.
-       ===================================================== */
-    const 버튼이름들 = ["전체"].concat(메뉴.map(function (묶음) { return 묶음.카테고리; }));
-    const 모든구역 = Array.from(document.querySelectorAll(".category"));
-    const 대표영역 = document.getElementById("signature-area");
-    const 필터버튼들 = [];
-
-    // 번호 0 = 전체, 1 = 첫 번째 카테고리(커피), 2 = 두 번째(논커피) ...
-    function 카테고리선택(번호) {
-      모든구역.forEach(function (구역, i) {
-        // 전체(0)이면 전부 보이고, 아니면 선택한 카테고리만 보임
-        구역.classList.toggle("hidden", 번호 !== 0 && i !== 번호 - 1);
-      });
-      대표영역.classList.toggle("hidden", 번호 !== 0);   // 대표 메뉴는 '전체'일 때만
-      필터버튼들.forEach(function (버튼, i) {
-        버튼.classList.toggle("active", i === 번호);       // 선택된 버튼만 색이 달라져요
-      });
-    }
-
-    버튼이름들.forEach(function (이름, 번호) {
+    // 카테고리 버튼 만들기: [전체] + 묶음마다 버튼 하나씩
+    const 카테고리줄 = document.getElementById("카테고리줄");
+    ["전체"].concat(묶음순서).forEach(function (묶음이름) {
       const 버튼 = document.createElement("button");
       버튼.type = "button";
-      버튼.textContent = 이름;
-      버튼.addEventListener("click", function () {
-        카테고리선택(번호);
-        // 버튼 바로 아래 메뉴 시작 위치로 부드럽게 올려 줍니다
-        const 위치 = 메뉴칸.getBoundingClientRect().top + window.scrollY - 80;
-        if (window.scrollY > 위치) window.scrollTo({ top: 위치, behavior: "smooth" });
-      });
-      탭칸.appendChild(버튼);
-      필터버튼들.push(버튼);
+      버튼.className = "카테고리버튼";
+      버튼.setAttribute("data-group", 묶음이름);
+      버튼.textContent = (묶음그림[묶음이름] ? 묶음그림[묶음이름] + " " : "") + 묶음이름;
+      버튼.addEventListener("click", function () { 카테고리고르기(묶음이름, true); });
+      카테고리줄.append(버튼);
     });
 
-    카테고리선택(0);   // 처음 들어오면 '전체'가 선택된 상태
+    // 고른 카테고리의 메뉴만 보여주고, 고른 버튼 색을 바꿔요
+    function 카테고리고르기(고른묶음, 화면옮기기) {
+      카테고리줄.querySelectorAll(".카테고리버튼").forEach(function (버튼) {
+        const 선택 = 버튼.getAttribute("data-group") === 고른묶음;
+        버튼.classList.toggle("선택됨", 선택);
+        버튼.setAttribute("aria-pressed", 선택 ? "true" : "false");
+      });
+      메뉴들.querySelectorAll("[data-group]").forEach(function (칸) {
+        칸.hidden = 고른묶음 !== "전체" && 칸.getAttribute("data-group") !== 고른묶음;
+      });
+      // 화면을 아래로 내린 상태에서 버튼을 누르면, 메뉴 맨 처음으로 올려 줘요
+      const 메뉴구역 = document.getElementById("메뉴구역");
+      if (화면옮기기 && 메뉴구역.getBoundingClientRect().top < 0) {
+        메뉴구역.scrollIntoView({ behavior: "smooth" });
+      }
+    }
 
-    // '맨 위로' 버튼: 400px 이상 내리면 나타나고, 누르면 맨 위로 올라가요
-    const 맨위버튼 = document.getElementById("to-top");
+    // 처음 들어오면 '전체'가 선택된 상태
+    카테고리고르기("전체", false);
+
+    // ▲ 맨 위로 버튼: 화면을 한 화면 넘게 내리면 나타나고, 누르면 맨 위로 올라가요
+    const 맨위로 = document.getElementById("맨위로");
     window.addEventListener("scroll", function () {
-      맨위버튼.classList.toggle("show", window.scrollY > 400);
+      맨위로.classList.toggle("보임", window.scrollY > window.innerHeight);
     }, { passive: true });
-    맨위버튼.addEventListener("click", function () {
+    맨위로.addEventListener("click", function () {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
+
+    function 메뉴카드만들기(메뉴) {
+      const 카드 = document.createElement("article");
+      카드.className = "메뉴 유리카드";
+      카드.setAttribute("data-group", 메뉴.묶음 || "기타");
+
+      const 윗줄 = document.createElement("div");
+      윗줄.className = "메뉴윗줄";
+
+      const 이름 = document.createElement("h3");
+      이름.className = "메뉴이름";
+      이름.textContent = 메뉴.이름;
+
+      // 시그니처 메뉴면 '⭐ 시그니처' 딱지를 붙이고 카드를 강조해요 (추천: 1 또는 예전 방식 대표: true)
+      if (메뉴.대표 || Number(메뉴.추천) === 1) {
+        카드.classList.add("대표메뉴");
+        const 딱지 = document.createElement("span");
+        딱지.className = "대표딱지";
+        딱지.textContent = 시그니처딱지글자;
+        이름.append(딱지);
+      }
+
+      // 품절 메뉴면 카드를 흐리게 하고 '오늘 품절' 딱지를 붙여요 (품절: 1)
+      // 딱지는 흐려지지 않도록 카드 맨 아래에 따로 붙여요
+      let 품절딱지 = null;
+      if (Number(메뉴.품절) === 1) {
+        카드.classList.add("품절메뉴");
+        품절딱지 = document.createElement("span");
+        품절딱지.className = "품절딱지";
+        품절딱지.textContent = 품절딱지글자;
+      }
+
+      const 가격 = document.createElement("span");
+      가격.className = "메뉴가격";
+      가격.textContent = 메뉴.가격;
+
+      const 설명 = document.createElement("p");
+      설명.className = "메뉴설명";
+      설명.textContent = 메뉴.설명;
+
+      윗줄.append(이름, 가격);
+      카드.append(윗줄, 설명);
+      if (품절딱지) 카드.append(품절딱지);
+      메뉴들.append(카드);
+    }
   </script>
 </body>
 </html>
